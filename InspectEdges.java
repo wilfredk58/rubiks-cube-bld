@@ -74,7 +74,7 @@ public class InspectEdges {
         return solvedState;
     }
 
-    /*private int[][][] generateCube(String input) {
+    private int[][][] generateCube(String input) {
         if (input.length() != 54) throw new IllegalArgumentException("Not a valid 3x3");
 
         int[][][] cubeInput = new int[6][3][3];
@@ -82,18 +82,20 @@ public class InspectEdges {
 
         for (int a=0; a<6; a++)
             for (int b=0; b<3; b++)
-                for(int c=0; c<3; c++)
-                    cubeInput[a][b][c] = input.charAt(i++);
+                for(int c=0; c<3; c++) {
+                    char ch = input.charAt(i++);
+                    cubeInput[a][b][c] = Integer.valueOf(Character.getNumericValue(ch));
+                }
 
         return cubeInput;
-    }*/
+    }
 
     ArrayList<Character> inspect(HashMap<Character,String> letterLocations, HashMap<String,Character> solvedState, int[][][] inputCube) {
         ArrayList<Character> edges = new ArrayList<Character>();
         String bfr1 = "501";
         String bfr2 = "321";
 
-        for (int i=0; i<22; i++) {
+        for (int i=0; i<12; i++) {
             String bfr = inputCube[Character.getNumericValue(bfr1.charAt(0))][Character.getNumericValue(bfr1.charAt(1))][Character.getNumericValue(bfr1.charAt(2))] + ","
                 + inputCube[Character.getNumericValue(bfr2.charAt(0))][Character.getNumericValue(bfr2.charAt(1))][Character.getNumericValue(bfr2.charAt(2))];
             char letter1 = solvedState.get(bfr);
@@ -114,53 +116,16 @@ public class InspectEdges {
     }
     
     public static void main(String[] args) {
-        int[][][] inputCube = {
-            {
-                {2, 2, 0},
-                {0, 0, 1},
-                {2, 5, 0}
-            },
-            {
-                {4, 1, 1},
-                {5, 1, 3},
-                {1, 2, 2}
-            },
-            {
-                {2, 0, 1},
-                {4, 2, 4},
-                {4, 4, 5}
-            },
-            {
-                {1, 3, 3},
-                {4, 3, 1},
-                {0, 5, 5}
-            },
-            {
-                {0, 3, 5},
-                {2, 4, 3},
-                {5, 2, 4}
-            },
-            {
-                {3, 1, 3},
-                {5, 5, 1},
-                {3, 0, 4}
-            },
-        };
-
-        /*for (int a=0; a<6; a++)
-        for (int b=0; b<3; b++)
-            for(int c=0; c<3; c++)
-                System.out.print(inputCube[a][b][c]);*/
-
-
         InspectEdges test1 = new InspectEdges();
         test1.letterLocations = test1.generateLetterLocations(test1.letterLocations);
         test1.solvedState = test1.generateSolvedState(test1.solvedState);
-        test1.inspect(test1.letterLocations, test1.solvedState, inputCube);
-        //test1.cubeInput = test1.generateCube("331112361522624233312535556244542166146354635424662415");
 
+        test1.cubeInput = test1.generateCube("220001250411513122201424445133431055035243524313551304");
+        test1.inspect(test1.letterLocations, test1.solvedState, test1.cubeInput);
 
-
-
+        /* Corner Cases:
+        flipped edges (1 flipped edge or 2)
+        start off with flipped
+        more than one cycle */
     }
 }
