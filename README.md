@@ -1,1 +1,1 @@
-# rubiks-cube-bld
+# rubiks-cube-solver
